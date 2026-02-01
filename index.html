@@ -51,18 +51,20 @@ body {
 /* FLOATING LYRICS */
 .lyric {
   position: absolute;
-  font-size: 1.4rem;              /* phone-safe */
-  max-width: 88vw;                /* NEVER cut at edges */
-  padding: 0 6px;                 /* breathing room */
+  font-size: 1.35rem;                 /* phone-safe */
+  max-width: calc(100vw - 24px);      /* NEVER cut at edges */
+  padding: 0 12px;
+
+  white-space: nowrap;
   text-align: center;
 
-  white-space: nowrap;            /* keep single-line */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: rgba(255,255,255,0.75);
 
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 0.03em;
-  text-shadow: 0 0 6px rgba(255,255,255,0.25);
+  /* REAL glow (visible on phone) */
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.9),
+    0 0 14px rgba(255,182,213,0.9),
+    0 0 28px rgba(255,122,185,0.8);
 
   animation: lyricFall linear infinite;
 }
@@ -348,9 +350,18 @@ function lyricsFloat() {
     const col = lyricRow % lyricColumns;
     const centerX = col * columnWidth + columnWidth / 2;
 
-    s.style.left = centerX + "vw";
-    s.style.top = (90 + (lyricRow % 4) * rowGap) + "vh";
-    s.style.transform = "translateX(-50%)";
+    lyricsBg.appendChild(s);
+
+/* clamp inside screen */
+const rect = s.getBoundingClientRect();
+const safePadding = 12;
+
+let x = centerX / 100 * window.innerWidth - rect.width / 2;
+x = Math.max(safePadding, Math.min(x, window.innerWidth - rect.width - safePadding));
+
+s.style.left = x + "px";
+
+    s.style.top = (60 + (lyricRow % 3) * rowGap) + "vh";
     s.style.animationDuration = "45s";
 
     lyricsBg.appendChild(s);
@@ -382,6 +393,7 @@ hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
 
 </body>
 </html>
+
 
 
 
