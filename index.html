@@ -54,6 +54,7 @@ body {
   font-size: 1.35rem;                 /* phone-safe */
   max-width: calc(100vw - 24px);      /* NEVER cut at edges */
   padding: 0 12px;
+  pointer-events: none;
 
   white-space: nowrap;
   text-align: center;
@@ -264,7 +265,7 @@ body {
       <p>
 Dear mine,
 
-I know babyy i'm a little late but I hope that spot to be your valentine is still open ;)
+I know baby i'm a little late but I hope that spot to be your valentine is still open ;)
 
 Baby you are the love of my life…
 you are my little baby lion....billu mau....my baby girl and you will always be ❤️
@@ -296,6 +297,8 @@ const popupBg = document.getElementById("popupBg");
 const yesBtn = document.getElementById("yesBtn");
 const hellYesBtn = document.getElementById("hellYesBtn");
 const lyricsBg = document.getElementById("lyricsBg");
+const centerSafeWidth = 160; // px, protects envelope width on phone
+
 
 const lyrics = [
   "You had me at hello",
@@ -367,9 +370,25 @@ const safePadding = 12;
 let x = centerX / 100 * window.innerWidth - rect.width / 2;
 x = Math.max(safePadding, Math.min(x, window.innerWidth - rect.width - safePadding));
 
-s.style.left = x + "px";
+const screenW = window.innerWidth;
+const columnWidth = screenW / lyricColumns;
 
-    s.style.top = (55 + (lyricRow % 3) * rowGap) + "vh";
+let x = col * columnWidth + columnWidth / 2;
+
+// push left column further left so it never overlaps envelope
+if (col === 0) {
+  x -= centerSafeWidth / 2;
+}
+
+// push right column further right (symmetry)
+if (col === lyricColumns - 1) {
+  x += centerSafeWidth / 2;
+}
+
+s.style.left = x + "px";
+s.style.transform = "translateX(-50%)";
+
+    s.style.top = (65 + (lyricRow % 3) * rowGap) + "vh";
     s.style.animationDuration = "45s";
 
     lyricsBg.appendChild(s);
@@ -401,6 +420,7 @@ hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
 
 </body>
 </html>
+
 
 
 
