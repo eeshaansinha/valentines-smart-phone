@@ -8,246 +8,220 @@
 <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  height: 100svh;
-  font-family: 'Sacramento', cursive;
-  background: linear-gradient(135deg, #ffd6e8, #ff9acb);
-  overflow: hidden;
-  touch-action: manipulation;
+body{
+  margin:0;
+  height:100svh;
+  font-family:'Sacramento',cursive;
+  background:linear-gradient(135deg,#ffd6e8,#ff9acb);
+  overflow:hidden;
+  touch-action:manipulation;
 }
 
 /* BACKGROUND */
-.bg, .lyrics-bg {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+.bg,.lyrics-bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
 }
-.bg { z-index: 0; }
-.lyrics-bg { z-index: 1;
-  pointer-events: none;
-}
-}
+.bg{z-index:0}
+.lyrics-bg{z-index:1}
 
 /* BLOBS */
-.blob {
-  position: absolute;
-  width: 50vw;
-  height: 50vw;
-  max-width: 280px;
-  max-height: 280px;
-  background: radial-gradient(circle, rgba(255,255,255,.35), transparent 60%);
-  filter: blur(40px);
-  animation: drift 28s ease-in-out infinite;
+.blob{
+  position:absolute;
+  width:50vw;
+  height:50vw;
+  max-width:280px;
+  max-height:280px;
+  background:radial-gradient(circle,rgba(255,255,255,.35),transparent 60%);
+  filter:blur(40px);
+  animation:drift 28s ease-in-out infinite;
 }
-.blob.one { top: 6%; left: 6%; }
-.blob.two { bottom: 12%; right: 10%; animation-duration: 36s; }
-.blob.three { top: 48%; left: 58%; animation-duration: 40s; }
+.blob.one{top:6%;left:6%}
+.blob.two{bottom:12%;right:10%;animation-duration:36s}
+.blob.three{top:48%;left:58%;animation-duration:40s}
 
-@keyframes drift {
-  0%,100% { transform: translate(0,0); }
-  50% { transform: translate(24px,-20px); }
+@keyframes drift{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(24px,-20px)}
 }
 
-/* FLOATING LYRICS */
-.lyric {
-  position: absolute;
-  font-size: 1.35rem;                 /* phone-safe */
-  max-width: calc(100vw - 24px);      /* NEVER cut at edges */
-  padding: 0 12px;
-  pointer-events: none;
-
-  white-space: nowrap;
-  text-align: center;
-
-  color: rgba(255,255,255,0.75);
-
-  /* REAL glow (visible on phone) */
+/* LYRICS */
+.lyric{
+  position:absolute;
+  font-size:1.35rem;
+  max-width:calc(100vw - 32px);
+  padding:0 12px;
+  white-space:nowrap;
+  text-align:center;
+  color:rgba(255,255,255,.75);
   text-shadow:
-    0 0 6px rgba(255,255,255,0.9),
-    0 0 14px rgba(255,182,213,0.9),
-    0 0 28px rgba(255,122,185,0.8);
-
-  animation: lyricFall linear infinite;
+    0 0 6px rgba(255,255,255,.9),
+    0 0 14px rgba(255,182,213,.9),
+    0 0 26px rgba(255,122,185,.8);
+  animation:lyricFall linear infinite;
+  pointer-events:none;
 }
 
-
-@keyframes lyricFall {
-  0% {
-    opacity: 0.85;              /* 👈 visible instantly */
-    transform: translateY(0);
-  }
-  90% {
-    opacity: 0.85;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-120svh);
-  }
+@keyframes lyricFall{
+  0%{opacity:.85;transform:translateY(0)}
+  90%{opacity:.85}
+  100%{opacity:0;transform:translateY(-120svh)}
 }
 
 /* STAGE */
-.stage {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
+.stage{
+  position:relative;
+  z-index:3;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
 }
 
-/* ENVELOPE — SMALLER */
-.envelope {
-  width: 76vw;            /* reduced */
-  max-width: 300px;
-  aspect-ratio: 16 / 10;
-  background: #ff7bbd;
-  border-radius: 14px;
-  position: relative;
-  box-shadow: 0 20px 45px rgba(0,0,0,.22);
-  animation: float 5s ease-in-out infinite;
+/* ENVELOPE */
+.envelope{
+  width:76vw;
+  max-width:300px;
+  aspect-ratio:16/10;
+  background:#ff7bbd;
+  border-radius:14px;
+  position:relative;
+  box-shadow:0 20px 45px rgba(0,0,0,.22);
+  animation:float 5s ease-in-out infinite;
+  z-index:5;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
 /* FLAP */
-.flap {
-  position: absolute;
-  inset: 0;
-  background: #ff5fa8;
-  clip-path: polygon(0 0,100% 0,50% 60%);
-  transform-origin: top center;
-  transition: transform 1.2s cubic-bezier(.22,.61,.36,1);
-  border-radius: 14px 14px 0 0;
-  z-index: 1;
-}
-.envelope.open .flap {
-  transform: rotateX(180deg);
+.flap{
+  position:absolute;
+  inset:0;
+  background:#ff5fa8;
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top center;
+  transition:transform 1.2s cubic-bezier(.22,.61,.36,1);
+  border-radius:14px 14px 0 0;
+  z-index:1;
 }
 
-/* LETTER — SMALLER */
-.letter {
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
+.envelope.open .flap{
+  transform:rotateX(180deg);
+}
 
-  width: 68vw;
-  max-width: 260px;
-
-  height: 44svh;
-  max-height: 48svh;
-
-  padding: 20px;
-
-  border-radius: 14px;
+/* LETTER */
+.letter{
+  position:absolute;
+  left:50%;
+  bottom:8px;
+  width:68vw;
+  max-width:260px;
+  height:44svh;
+  max-height:48svh;
+  padding:20px;
+  border-radius:14px;
   background:
     linear-gradient(180deg,#f7ecd9,#f3e5cf),
     repeating-linear-gradient(0deg,rgba(120,90,60,.035) 0 1px,transparent 2px 4px),
     repeating-linear-gradient(90deg,rgba(120,90,60,.03) 0 1px,transparent 3px 6px);
-
   box-shadow:
     inset 0 0 16px rgba(0,0,0,.08),
     0 10px 18px rgba(0,0,0,.18);
-
-  transform: translateX(-50%) translateY(0);
-  opacity: 0;
-  transition: transform 1.2s cubic-bezier(.22,.61,.36,1), opacity .5s;
-
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  z-index: 3;
+  transform:translateX(-50%) translateY(0);
+  opacity:0;
+  transition:transform 1.2s cubic-bezier(.22,.61,.36,1),opacity .5s;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  z-index:3;
 }
 
-.envelope.open .letter {
-  transform: translateX(-50%) translateY(-38px);
-  opacity: 1;
+.envelope.open .letter{
+  transform:translateX(-50%) translateY(-38px);
+  opacity:1;
 }
 
-.letter p {
-  font-size: 1.45rem;
-  line-height: 1.5;
-  color: #4b2e1f;
-  white-space: pre-line;
+.letter p{
+  font-size:1.45rem;
+  line-height:1.5;
+  color:#4b2e1f;
+  white-space:pre-line;
 }
 
-.signature {
-  margin-top: 18px;
-  text-align: right;
-  font-size: 1.3rem;
+.signature{
+  margin-top:18px;
+  text-align:right;
+  font-size:1.3rem;
 }
 
-.next-btn {
-  display: none;
-  margin: 16px auto 0;
-  padding: 9px 22px;
-  border-radius: 22px;
-  border: none;
-  background: #ff4fa3;
-  color: #fff;
-  font-size: .95rem;
+.next-btn{
+  display:none;
+  margin:16px auto 0;
+  padding:9px 22px;
+  border-radius:22px;
+  border:none;
+  background:#ff4fa3;
+  color:#fff;
+  font-size:.95rem;
 }
 
 /* HEARTS */
-.heart {
-  position: fixed;
-  top: -10%;
-  font-size: 30px;
-  animation: heartFall linear infinite;
-  z-index: 1;
+.heart{
+  position:fixed;
+  top:-10%;
+  font-size:30px;
+  animation:heartFall linear infinite;
+  z-index:2;
+  pointer-events:none;
 }
 
-@keyframes heartFall {
-  to {
-    transform: translateY(120svh) rotate(18deg);
-    opacity: 0;
-  }
+@keyframes heartFall{
+  to{transform:translateY(120svh) rotate(18deg);opacity:0}
 }
 
 /* POPUP */
-.popup-bg {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
+.popup-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
 }
 
-.popup {
-  width: 84vw;
-  max-width: 300px;
-  background: #fff0f7;
-  padding: 26px;
-  border-radius: 20px;
-  text-align: center;
-  font-family: system-ui, sans-serif;
+.popup{
+  width:84vw;
+  max-width:300px;
+  background:#fff0f7;
+  padding:26px;
+  border-radius:20px;
+  text-align:center;
+  font-family:system-ui,sans-serif;
 }
 
-.popup h2 {
-  font-size: 1.1rem;
-  color: #5a003c;
+.popup h2{
+  font-size:1.1rem;
+  color:#5a003c;
 }
 
-.popup button {
-  margin: 10px;
-  padding: 9px 22px;
-  border-radius: 22px;
-  border: none;
-  background: #ff4fa3;
-  color: #fff;
-  font-size: .95rem;
+.popup button{
+  margin:10px;
+  padding:9px 22px;
+  border-radius:22px;
+  border:none;
+  background:#ff4fa3;
+  color:#fff;
+  font-size:.95rem;
 }
 
-.popup .alt {
-  background: #ff6fbf;
-}
+.popup .alt{background:#ff6fbf}
 </style>
 </head>
 
@@ -268,7 +242,7 @@ body {
       <p>
 Dear mine,
 
-I know baby i'm a little late but I hope that spot to be your valentine is still open ;)
+I know babyy i'm a little late but I hope that spot to be your valentine is still open ;)
 
 Baby you are the love of my life…
 you are my little baby lion....billu mau....my baby girl and you will always be ❤️
@@ -291,20 +265,15 @@ Mwahhhh Mwahhhh!!!!!
 </div>
 
 <script>
-  const lyricColumns = 3;                // perfect for phones
-const rowGap = 14; // vertical gap in vh between lyrics
+const envelope=document.getElementById("envelope");
+const nextBtn=document.getElementById("nextBtn");
+const popupBg=document.getElementById("popupBg");
+const yesBtn=document.getElementById("yesBtn");
+const hellYesBtn=document.getElementById("hellYesBtn");
+const lyricsBg=document.getElementById("lyricsBg");
 
-const envelope = document.getElementById("envelope");
-const nextBtn = document.getElementById("nextBtn");
-const popupBg = document.getElementById("popupBg");
-const yesBtn = document.getElementById("yesBtn");
-const hellYesBtn = document.getElementById("hellYesBtn");
-const lyricsBg = document.getElementById("lyricsBg");
-const centerSafeWidth = 160; // px, protects envelope width on phone
-
-
-const lyrics = [
-  "You had me at hello",
+const lyrics=[
+"You had me at hello",
 "All I dream of is your eyes",
 "All I long for is your touch",
 "I think they call this love",
@@ -320,116 +289,77 @@ const lyrics = [
 "I found a love for me"
 ];
 
-let opened = false;
-const lanes = 4;
-const laneBusy = new Array(lanes).fill(false);
+let opened=false;
+const lyricColumns=3;
+const rowGap=30;
+let lyricRow=0;
 
-envelope.addEventListener("click", () => {
-  if (!opened) {
-    opened = true;
+envelope.addEventListener("click",()=>{
+  if(!opened){
+    opened=true;
     envelope.classList.add("open");
     hearts();
     lyricsFloat();
-    setTimeout(() => nextBtn.style.display = "block", 1500);
+    setTimeout(()=>nextBtn.style.display="block",1500);
   }
 });
 
-nextBtn.addEventListener("click", e => {
+nextBtn.addEventListener("click",e=>{
   e.stopPropagation();
-  popupBg.style.display = "flex";
+  popupBg.style.display="flex";
 });
 
-function hearts() {
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.textContent = "💗";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (6 + Math.random() * 4) + "s";
+function hearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent="💗";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(6+Math.random()*4)+"s";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 12000);
-  }, 750);
+    setTimeout(()=>h.remove(),12000);
+  },750);
 }
 
-let lyricRow = 0;
+function lyricsFloat(){
+  setInterval(()=>{
+    const s=document.createElement("span");
+    s.className="lyric";
+    s.textContent=lyrics[Math.floor(Math.random()*lyrics.length)];
 
-function lyricsFloat() {
-  setInterval(() => {
-    const s = document.createElement("span");
-    s.className = "lyric";
-    s.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
-    s.style.opacity = "0.85";
+    const col=lyricRow%lyricColumns;
+    const columnWidth=window.innerWidth/lyricColumns;
+    let x=col*columnWidth+columnWidth/2;
 
-    const columnWidth = 100 / lyricColumns;
-    const col = lyricRow % lyricColumns;
-    const centerX = col * columnWidth + columnWidth / 2;
+    s.style.left=x+"px";
+    s.style.top=(55+(lyricRow%3)*rowGap)+"vh";
+    s.style.transform="translateX(-50%)";
+    s.style.animationDuration="45s";
 
     lyricsBg.appendChild(s);
-
-/* clamp inside screen */
-const rect = s.getBoundingClientRect();
-const safePadding = 12;
-
-let x = centerX / 100 * window.innerWidth - rect.width / 2;
-x = Math.max(safePadding, Math.min(x, window.innerWidth - rect.width - safePadding));
-
-const screenW = window.innerWidth;
-const columnWidth = screenW / lyricColumns;
-
-let x = col * columnWidth + columnWidth / 2;
-
-// push left column further left so it never overlaps envelope
-if (col === 0) {
-  x -= centerSafeWidth / 2;
-}
-
-// push right column further right (symmetry)
-if (col === lyricColumns - 1) {
-  x += centerSafeWidth / 2;
-}
-
-s.style.left = x + "px";
-s.style.transform = "translateX(-50%)";
-
-    s.style.top = (65 + (lyricRow % 3) * rowGap) + "vh";
-    s.style.animationDuration = "45s";
-
-    lyricsBg.appendChild(s);
-
-    setTimeout(() => s.remove(), 65000);
+    setTimeout(()=>s.remove(),60000);
 
     lyricRow++;
-  }, 1800);
+  },1800);
 }
 
-
-
-function celebrate() {
-  popupBg.style.display = "none";
-  for (let i = 0; i < 90; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.textContent = "💗";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (3 + Math.random() * 3) + "s";
+function celebrate(){
+  popupBg.style.display="none";
+  for(let i=0;i<90;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent="💗";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 6000);
+    setTimeout(()=>h.remove(),6000);
   }
 }
 
-yesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
-hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
+yesBtn.onclick=e=>{e.stopPropagation();celebrate()};
+hellYesBtn.onclick=e=>{e.stopPropagation();celebrate()};
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
