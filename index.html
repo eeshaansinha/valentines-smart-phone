@@ -273,7 +273,8 @@ Mwahhhh Mwahhhh!!!!!
 
 <script>
   const lyricColumns = 3;                // perfect for phones
-const columnBusy = new Array(lyricColumns).fill(false);
+const rowGap = 22; // vertical gap in vh between lyrics
+
 const envelope = document.getElementById("envelope");
 const nextBtn = document.getElementById("nextBtn");
 const popupBg = document.getElementById("popupBg");
@@ -329,35 +330,31 @@ function hearts() {
   }, 750);
 }
 
+let lyricRow = 0;
+
 function lyricsFloat() {
   setInterval(() => {
-
-    const col = columnBusy.indexOf(false);
-    if (col === -1) return;
-
-    columnBusy[col] = true;
-
     const s = document.createElement("span");
     s.className = "lyric";
     s.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
 
     const columnWidth = 100 / lyricColumns;
+    const col = lyricRow % lyricColumns;
     const centerX = col * columnWidth + columnWidth / 2;
 
     s.style.left = centerX + "vw";
-    s.style.top = "110svh";
+    s.style.top = (110 + lyricRow * rowGap) + "vh";
     s.style.transform = "translateX(-50%)";
-    s.style.animationDuration = "55s";   // slow & elegant
+    s.style.animationDuration = "60s";
 
     lyricsBg.appendChild(s);
 
-    setTimeout(() => {
-      s.remove();
-      columnBusy[col] = false;
-    }, 60000);
+    setTimeout(() => s.remove(), 65000);
 
-  }, 2500);
+    lyricRow++;
+  }, 1800);
 }
+
 
 
 function celebrate() {
@@ -379,6 +376,7 @@ hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
 
 </body>
 </html>
+
 
 
 
