@@ -71,10 +71,17 @@ body {
 
 
 @keyframes lyricFall {
-  from { opacity: 0; transform: translateY(0); }
-  15% { opacity: .85; }
-  85% { opacity: .85; }
-  to { opacity: 0; transform: translateY(-120svh); }
+  0% {
+    opacity: 0.85;              /* 👈 visible instantly */
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120svh);
+  }
 }
 
 /* STAGE */
@@ -281,7 +288,7 @@ Mwahhhh Mwahhhh!!!!!
 
 <script>
   const lyricColumns = 3;                // perfect for phones
-const rowGap = 10; // vertical gap in vh between lyrics
+const rowGap = 14; // vertical gap in vh between lyrics
 
 const envelope = document.getElementById("envelope");
 const nextBtn = document.getElementById("nextBtn");
@@ -345,6 +352,7 @@ function lyricsFloat() {
     const s = document.createElement("span");
     s.className = "lyric";
     s.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
+    s.style.opacity = "0.85";
 
     const columnWidth = 100 / lyricColumns;
     const col = lyricRow % lyricColumns;
@@ -361,7 +369,7 @@ x = Math.max(safePadding, Math.min(x, window.innerWidth - rect.width - safePaddi
 
 s.style.left = x + "px";
 
-    s.style.top = (60 + (lyricRow % 3) * rowGap) + "vh";
+    s.style.top = (55 + (lyricRow % 3) * rowGap) + "vh";
     s.style.animationDuration = "45s";
 
     lyricsBg.appendChild(s);
@@ -393,6 +401,7 @@ hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
 
 </body>
 </html>
+
 
 
 
