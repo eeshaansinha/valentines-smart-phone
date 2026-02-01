@@ -51,10 +51,16 @@ body {
 /* FLOATING LYRICS */
 .lyric {
   position: absolute;
-  font-size: 1.45rem;           /* clean & readable */
-  white-space: nowrap;          /* NO wrapping */
-  color: rgba(255,255,255,0.55);
+  font-size: 1.4rem;              /* phone-safe */
+  max-width: 88vw;                /* NEVER cut at edges */
+  padding: 0 6px;                 /* breathing room */
+  text-align: center;
 
+  white-space: nowrap;            /* keep single-line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  color: rgba(255,255,255,0.55);
   letter-spacing: 0.03em;
   text-shadow: 0 0 6px rgba(255,255,255,0.25);
 
@@ -343,9 +349,9 @@ function lyricsFloat() {
     const centerX = col * columnWidth + columnWidth / 2;
 
     s.style.left = centerX + "vw";
-    s.style.top = (110 + lyricRow * rowGap) + "vh";
+    s.style.top = (90 + (lyricRow % 4) * rowGap) + "vh";
     s.style.transform = "translateX(-50%)";
-    s.style.animationDuration = "60s";
+    s.style.animationDuration = "45s";
 
     lyricsBg.appendChild(s);
 
@@ -376,6 +382,7 @@ hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
 
 </body>
 </html>
+
 
 
 
