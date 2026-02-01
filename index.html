@@ -51,19 +51,16 @@ body {
 /* FLOATING LYRICS */
 .lyric {
   position: absolute;
-  font-size: 1.6rem;              /* fits phone width */
-  max-width: 80vw;                /* prevents overflow */
-  text-align: center;
+  font-size: 1.45rem;           /* clean & readable */
+  white-space: nowrap;          /* NO wrapping */
+  color: rgba(255,255,255,0.55);
 
-  color: rgba(255,255,255,0.88);
-  white-space: normal;            /* allow wrapping if needed */
-
-  text-shadow:
-    0 0 6px rgba(255,255,255,0.6),
-    0 0 14px rgba(255,182,213,0.6);
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 6px rgba(255,255,255,0.25);
 
   animation: lyricFall linear infinite;
 }
+
 
 @keyframes lyricFall {
   from { opacity: 0; transform: translateY(0); }
@@ -275,6 +272,8 @@ Mwahhhh Mwahhhh!!!!!
 </div>
 
 <script>
+  const lyricColumns = 3;                // perfect for phones
+const columnBusy = new Array(lyricColumns).fill(false);
 const envelope = document.getElementById("envelope");
 const nextBtn = document.getElementById("nextBtn");
 const popupBg = document.getElementById("popupBg");
@@ -332,27 +331,34 @@ function hearts() {
 
 function lyricsFloat() {
   setInterval(() => {
-    const lane = laneBusy.indexOf(false);
-    if (lane === -1) return;
 
-    laneBusy[lane] = true;
+    const col = columnBusy.indexOf(false);
+    if (col === -1) return;
+
+    columnBusy[col] = true;
 
     const s = document.createElement("span");
     s.className = "lyric";
     s.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
-    s.style.left = "50%";
-s.style.transform = "translateX(-50%)";
+
+    const columnWidth = 100 / lyricColumns;
+    const centerX = col * columnWidth + columnWidth / 2;
+
+    s.style.left = centerX + "vw";
     s.style.top = "110svh";
-    s.style.animationDuration = (45 + Math.random() * 25) + "s";
+    s.style.transform = "translateX(-50%)";
+    s.style.animationDuration = "55s";   // slow & elegant
 
     lyricsBg.appendChild(s);
 
     setTimeout(() => {
       s.remove();
-      laneBusy[lane] = false;
-    }, 65000);
-  }, 2400);
+      columnBusy[col] = false;
+    }, 60000);
+
+  }, 2500);
 }
+
 
 function celebrate() {
   popupBg.style.display = "none";
@@ -373,5 +379,6 @@ hellYesBtn.onclick = e => { e.stopPropagation(); celebrate(); };
 
 </body>
 </html>
+
 
 
